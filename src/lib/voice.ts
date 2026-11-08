@@ -80,7 +80,7 @@ const WAKE_DEBOUNCE = 1500
 // `\b` only knows ASCII letters, so with Cyrillic alternates the word edges are
 // spelled as lookarounds on any letter or digit instead.
 const WAKE =
-  /(?<![\p{L}\d_])(?:hey|hi|ok|okay|yo|эй|хей|привет|ок|окей)?\s*(?:jarvis|jarvys|jervis|jarvis's|travis|jarviss|java's|jarv|джарвис|джарвес|джервис|жарвис|ярвис|харвис|джарвіс)(?![\p{L}\d_])(?!'s)/iu
+  /(?<![\p{L}\d_])(?:hey|hi|ok|okay|yo|эй|хей|хэй|гей|привет|ок|окей)?[\s,.!?]*(?:jarvis|jarvys|jervis|jarvis's|travis|jarviss|java's|jarv|(?:дж|ж|ч|х|г)[аеэи]р[вб][иыіе][сз]|ярвис|джарвіс)(?![\p{L}\d_])(?!'s)/iu
 
 /** Everything after the wake phrase, which is usually the actual command. */
 function afterWake(text: string): string {
