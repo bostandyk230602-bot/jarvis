@@ -1005,6 +1005,11 @@ const handleRequest = async (req, res) => {
             : 'webm'
       const form = new FormData()
       form.append('model_id', 'scribe_v1')
+      // Auto-detection guesses wrong on short utterances and returns English,
+      // which makes the agent answer in English. Pin it; override with
+      // JARVIS_STT_LANGUAGE (an ISO 639-3 code, or "auto" to detect).
+      const sttLang = process.env.JARVIS_STT_LANGUAGE ?? 'rus'
+      if (sttLang !== 'auto') form.append('language_code', sttLang)
       form.append(
         'file',
         new Blob([Buffer.concat(chunks)], { type }),
