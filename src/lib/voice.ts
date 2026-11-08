@@ -77,8 +77,10 @@ const WAKE_DEBOUNCE = 1500
  * used to be silently discarded, so the wake word "just didn't work" with no
  * indication why. Better a rare false wake than a name that does not answer.
  */
+// `\b` only knows ASCII letters, so with Cyrillic alternates the word edges are
+// spelled as lookarounds on any letter or digit instead.
 const WAKE =
-  /\b(?:hey|hi|ok|okay|yo)?\s*(?:jarvis|jarvys|jervis|jarvis's|travis|jarviss|java's|jarv)\b(?!'s)/i
+  /(?<![\p{L}\d_])(?:hey|hi|ok|okay|yo|эй|хей|привет|ок|окей)?\s*(?:jarvis|jarvys|jervis|jarvis's|travis|jarviss|java's|jarv|джарвис|джарвес|джервис|жарвис|ярвис|харвис|джарвіс)(?![\p{L}\d_])(?!'s)/iu
 
 /** Everything after the wake phrase, which is usually the actual command. */
 function afterWake(text: string): string {
@@ -760,7 +762,7 @@ function startBrowserVoice(h: VoiceHandlers): Voice {
     rec = new Ctor()
     rec.continuous = true
     rec.interimResults = true
-    rec.lang = 'en-GB'
+    rec.lang = 'ru-RU'
     rec.onstart = () => {
       running = true
       diag.running = true
